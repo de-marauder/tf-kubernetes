@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vote-app-cert
+  namespace: vote-app
+spec:
+  dnsNames:
+    - vote.de-marauder.me
+    - result.de-marauder.me
+  secretName: vote-app-tls
+  issuerRef:
+    name: letsencrypt-cluster-issuer
+    kind: ClusterIssuer

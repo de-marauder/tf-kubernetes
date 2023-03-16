@@ -1,0 +1,108 @@
+- name: Setup sock shop and vote app on kubernetes
+  hosts: all
+  become: true
+  tasks:
+    - name: update apt repo
+      shell: apt update
+
+    - name: Create Config directory
+      file:
+        path: /etc/kube-marauder/
+        state: directory
+        mode: 0400
+
+    - name: Transfer Cluster Config
+      template:
+        src: ../cluster/config/{{cluster_config_name}}
+        dest: "/etc/kube-marauder/admin.conf"        
+
+    - name: Transfer Manifests Configs
+      template:
+        src: ../manifests
+        dest: "/manifest"
+        
+    - name: Install helm
+      shell: |
+        curl -LO https://get.helm.sh/helm-v3.11.1-linux-amd64.tar.gz
+        tar -zxvf helm-v3.11.1-linux-amd64.tar.gz
+        mv linux-amd64/helm /usr/local/bin/helm
+      args:
+        executable: /bin/bash
+      register: helm_install_output
+
+    - debug: var=helm_install_output
+
+    - name: Install cert-manager with Helm
+      shell: |
+        helm repo add jetstack https://charts.jetstack.io
+        helm repo update
+        helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0 --set installCRDs=true
+      args:
+        executable: /bin/bash
+      register: helm_install_cert-manager
+
+    - debug: var=helm_install_cert-manager
+
+    - name: Install ingress-nginx with Helm
+      shell: |
+        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx 
+        helm repo update
+        helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
+      args:
+        executable: /bin/bash
+      register: helm_install_ingress-nginx
+
+    - debug: var=helm_install_ingress-nginx
+
+    - name: Apply Cluster Issuer Config
+      shell: kubectl apply -f /manifests/clusterissuer/clusterissuer.yaml
+      args:
+        executable: /bin/bash
+
+    - name: Apply Sock Shop Manifests
+      shell: kubectl apply -f /manifests/sock-shop
+      args:
+        executable: /bin/bash
+
+    - name: Apply Vote App Manifests
+      shell: kubectl apply -f /manifests/vote-app
+      args:
+        executable: /bin/bash
+
+    - name: Add helm repos for monitoring
+      shell: |
+        helm repo add prometheus-community https://prometheus-community.github.io/helm-charts # for grafana, prometheus and alertmanager
+        helm repo add grafana https://grafana.github.io/helm-charts # For loki
+        helm repo update
+      args:
+        executable: /bin/bash
+
+    - name: Install Prometheus, Grafana, Alertmanager
+      shell: helm install monitoring prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
+      args:
+        executable: /bin/bash
+
+    - name: Install Loki stack for log aggregation
+      shell: |
+        helm install loki grafana/loki-stack --version \
+          --namespace=monitoring \
+          --create-namespace \
+          -f "/manifests/monitoring/loki-values.yaml"
+
+    - name: Apply ingress
+      shell: kubectl apply -f /manifests/nginx-ingress/all-ingress.yaml
+      args:
+        executable: /bin/bash
+
+    - name: Apply certificate
+      shell: kubectl apply -f /manifests/certificate/certificates.yaml
+      args:
+        executable: /bin/bash
+
+    - name: Check pods
+      shell: kubectl get all -A
+      args:
+        executable: /bin/bash
+      register: shell_output
+
+    - debug: var=shell_output 

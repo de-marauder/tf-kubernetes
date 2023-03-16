@@ -1,0 +1,30 @@
+- name: Install AWS CLI
+  hosts: all
+  become: true
+  tasks:
+    - name: update apt repo
+      shell: apt update
+
+    # Setup aws cli
+    - name: Download binary
+      shell: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      args:
+        executable: /bin/bash
+
+    - name: Unzip binary
+      shell: unzip -u awscliv2.zip
+      args:
+        executable: /bin/bash
+
+    - name: Execute AWS Installer
+      shell: ./aws/install
+      args:
+        executable: /bin/bash
+
+    - name: Verify installation
+      shell: aws --version
+      args:
+        executable: /bin/bash
+      register: shell_output
+
+    - debug: var=shell_output 
