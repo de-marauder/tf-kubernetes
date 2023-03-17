@@ -18,7 +18,7 @@ resource "kubectl_manifest" "ingress_sock_app_sock_app_ingress" {
 resource "kubectl_manifest" "ingress_prom_app_monitoring_app_ingress" {
   yaml_body = file("${path.module}/ingress/prom-ingress.yaml")
   depends_on = [
-    helm_release.kube-prometheus-stack,
+    # helm_release.kube-prometheus-stack,
     helm_release.ingress-nginx,
     helm_release.cert-manager,
     helm_release.loki-stack
@@ -27,7 +27,7 @@ resource "kubectl_manifest" "ingress_prom_app_monitoring_app_ingress" {
 resource "kubectl_manifest" "ingress_graf_app_monitoring_app_ingress" {
   yaml_body = file("${path.module}/ingress/graf-ingress.yaml")
   depends_on = [
-    helm_release.kube-prometheus-stack,
+    # helm_release.kube-prometheus-stack,
     helm_release.ingress-nginx,
     helm_release.cert-manager,
     helm_release.loki-stack

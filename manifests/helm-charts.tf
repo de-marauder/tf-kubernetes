@@ -20,13 +20,13 @@ resource "helm_release" "ingress-nginx" {
   create_namespace = true
 }
 
-resource "helm_release" "kube-prometheus-stack" { # grafana, alertmanager and prometheus
-  name       = "monitoring"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "kube-prometheus-stack"
-  namespace  = "monitoring"
-  create_namespace = true
-}
+# resource "helm_release" "kube-prometheus-stack" { # grafana, alertmanager and prometheus
+#   name       = "monitoring"
+#   repository = "https://prometheus-community.github.io/helm-charts"
+#   chart      = "kube-prometheus-stack"
+#   namespace  = "monitoring"
+#   create_namespace = true
+# }
 
 resource "helm_release" "loki-stack" {
   name       = "loki"
@@ -36,10 +36,11 @@ resource "helm_release" "loki-stack" {
   create_namespace = true
 
   values = [
-    "${file("${path.module}/loki-values.yaml")}"
+    "${file("${path.module}/helm/loki-values.yaml")}"
   ]
 }
 
 output "ingress-nginx" {
   value=helm_release.ingress-nginx
+  sensitive = true
 }

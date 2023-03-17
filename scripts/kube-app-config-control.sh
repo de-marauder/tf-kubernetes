@@ -69,7 +69,7 @@ helm install monitoring prometheus-community/kube-prometheus-stack --namespace m
 ## Install Loki stack for log aggregation
 #####################################################################################
 
-helm install loki grafana/loki-stack --version \
+helm install loki grafana/loki-stack \
   --namespace=monitoring \
   --create-namespace \
   -f "/manifests/monitoring/loki-values.yaml"

@@ -6,18 +6,6 @@ variable "region" {
 variable "cluster_name" {
   default = "kube-marauder"
 }
-
-variable "ci_instance_type" {
-  default = "t2.micro"
-}
-
-variable "AWS_ACCESS_KEY_ID" {
-  type = string
-  sensitive = true
-  default = "****************"
-}
-variable "AWS_SECRET_ACCESS_KEY" {
-  type = string
-  sensitive = true
-  default = "****************"
+variable "aws_profile" {
+  default= "terraform"
 }

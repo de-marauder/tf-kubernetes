@@ -35,19 +35,39 @@ module "lb_role" {
 
 # # }
 
-resource "kubernetes_service_account" "service-account" {
-  metadata {
-    name      = "aws-load-balancer-controller"
-    namespace = "kube-system"
-    labels = {
-      "app.kubernetes.io/name"      = "aws-load-balancer-controller"
-      "app.kubernetes.io/component" = "controller"
-    }
-    annotations = {
-      "eks.amazonaws.com/role-arn"               = module.lb_role.iam_role_arn
-      "eks.amazonaws.com/sts-regional-endpoints" = "true"
-    }
-  }
+# resource "kubernetes_service_account" "service-account" {
+#   metadata {
+#     name      = "aws-load-balancer-controller"
+#     namespace = "kube-system"
+#     labels = {
+#       "app.kubernetes.io/name"      = "aws-load-balancer-controller"
+#       "app.kubernetes.io/component" = "controller"
+#     }
+#     annotations = {
+#       "eks.amazonaws.com/role-arn"               = module.lb_role.iam_role_arn
+#       "eks.amazonaws.com/sts-regional-endpoints" = "true"
+#     }
+#   }
+
+#   depends_on = [
+#     data.aws_eks_cluster.cluster,
+#   ]
+# }
+resource "kubectl_manifest" "lb-service-account" {
+  yaml_body = <<YAML
+  apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/name: aws-load-balancer-controller
+      app.kubernetes.io/component: controller
+    name: aws-load-balancer-controller
+    namespace: kube-system
+    annotations:
+      eks.amazonaws.com/role-arn: ${module.lb_role.iam_role_arn}
+      eks.amazonaws.com/sts-regional-endpoints: "true"
+
+  YAML
 
   depends_on = [
     data.aws_eks_cluster.cluster,
@@ -60,7 +80,7 @@ resource "helm_release" "lb" {
   chart      = "aws-load-balancer-controller"
   namespace  = "kube-system"
   depends_on = [
-    kubernetes_service_account.service-account
+    kubectl_manifest.lb-service-account
   ]
 
   set {

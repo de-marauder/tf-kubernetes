@@ -11,7 +11,7 @@ resource "kubectl_manifest" "certificate_sock_app_sock_app_cert" {
 
   depends_on = [
     helm_release.cert-manager,
-    kubectl_manifest,ingress_sock_app_sock_app_ingress
+    kubectl_manifest.ingress_sock_app_sock_app_ingress
   ]
 }
 resource "kubectl_manifest" "certificate_prom_app_prom_app_cert" {

@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - prom.de-marauder.me
+    - monitor.de-marauder.me
     secretName: prometheus-server-tls
   rules:
-  - host: prom.de-marauder.me
+  - host: monitor.de-marauder.me
     http:
       paths:
       - path: /

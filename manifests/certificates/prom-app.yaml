@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   dnsNames:
-    - prom.de-marauder.me
+    - monitor.de-marauder.me
   secretName: prometheus-server-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
