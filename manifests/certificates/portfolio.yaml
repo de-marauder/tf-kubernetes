@@ -1,12 +1,12 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: prometheus-cert
-  namespace: monitoring
+  name: portfolio-cert
+  namespace: portfolio
 spec:
   dnsNames:
-    - prom.de-marauder.me
-  secretName: prometheus-server-tls
+    - de-marauder.me
+  secretName: portfolio-server-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer

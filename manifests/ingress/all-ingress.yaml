@@ -10,11 +10,11 @@ metadata:
 spec:
   tls:
   - hosts:
-    - result.de-marauder.me
-    - vote.de-marauder.me
+    - result-app.de-marauder.me
+    - vote-app.de-marauder.me
     secretName: vote-app-tls
   rules:
-  - host: vote.de-marauder.me
+  - host: vote-app.de-marauder.me
     http:
       paths:
       - path: /
@@ -24,7 +24,7 @@ spec:
             name: vote
             port: 
               number: 80
-  - host: result.de-marauder.me
+  - host: result-app.de-marauder.me
     http:
       paths:
       - path: /
@@ -49,10 +49,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - sock.de-marauder.me
+    - sock-shop.de-marauder.me
     secretName: sock-shop-tls
   rules:
-  - host: sock.de-marauder.me
+  - host: sock-shop.de-marauder.me
     http:
       paths:
       - path: /
@@ -88,7 +88,8 @@ spec:
         backend:
           service: 
             # name: prometheus-server
-            name: monitoring-kube-prometheus-prometheus
+            # name: monitoring-kube-prometheus-prometheus
+            name: loki-stack-prometheus-server
             port: 
               number: 80
 
@@ -106,10 +107,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - grafana.de-marauder.me
+    - graf.de-marauder.me
     secretName: grafana-server-tls
   rules:
-  - host: grafana.de-marauder.me
+  - host: graf.de-marauder.me
     http:
       paths:
       - path: /
@@ -117,6 +118,35 @@ spec:
         backend:
           service: 
             # name: grafana
-            name: monitoring-grafana
+            name: loki-stack-grafana
+            port: 
+              number: 3000
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingressClassName: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: portfolio-ingress
+  namespace: portfolio
+spec:
+  tls:
+  - hosts:
+    - de-marauder.me
+    secretName: portfolio-server-tls
+  rules:
+  - host: de-marauder.me
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service: 
+            # name: portfolio
+            name: portfolio
             port: 
               number: 80

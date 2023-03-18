@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - sock.de-marauder.me
+    - sock-shop.de-marauder.me
     secretName: sock-shop-tls
   rules:
-  - host: sock.de-marauder.me
+  - host: sock-shop.de-marauder.me
     http:
       paths:
       - path: /

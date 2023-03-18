@@ -16,21 +16,21 @@ variable "route53_zone_dns" {
 }
 variable "prom-sub-domain" {
   type    = string
-  default = "monitor"
+  default = "prom"
 }
 variable "grafana-sub-domain" {
   type    = string
-  default = "grafana"
+  default = "graf"
 }
 variable "result-sub-domain" {
   type    = string
-  default = "result"
+  default = "result-app"
 }
 variable "vote-sub-domain" {
   type    = string
-  default = "vote"
+  default = "vote-app"
 }
 variable "sock-sub-domain" {
   type    = string
-  default = "sock"
+  default = "sock-shop"
 }

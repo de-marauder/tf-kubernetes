@@ -5,8 +5,8 @@ metadata:
   namespace: vote-app
 spec:
   dnsNames:
-    - vote.de-marauder.me
-    - result.de-marauder.me
+    - vote-app.de-marauder.me
+    - result-app.de-marauder.me
   secretName: vote-app-tls
   issuerRef:
     name: letsencrypt-cluster-issuer

@@ -26,11 +26,11 @@ module "eks" {
 
   eks_managed_node_groups = {
     marauding-node = {
-      min_size     = 1
-      max_size     = 3
-      desired_size = 2
+      min_size     = 3
+      max_size     = 5
+      desired_size = 3
 
-      instance_types = ["t2.medium"]
+      instance_types = ["t3.medium"]
       capacity_type  = "ON_DEMAND"
 
       labels = {

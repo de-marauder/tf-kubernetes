@@ -54,6 +54,17 @@ resource "aws_route53_record" "sock" {
     evaluate_target_health = true
   }
 }
+resource "aws_route53_record" "portfolio" {
+  zone_id = data.aws_route53_zone.domain.zone_id
+  name    = "${var.route53_zone_dns}"
+  type = "A"
+
+  alias {
+    name                   = data.aws_elb.kube_lb.dns_name
+    zone_id                = data.aws_elb.kube_lb.zone_id
+    evaluate_target_health = true
+  }
+}
 
 output "nameservers" {
   value = data.aws_route53_zone.domain.name_servers

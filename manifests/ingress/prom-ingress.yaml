@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - monitor.de-marauder.me
+    - prom.de-marauder.me
     secretName: prometheus-server-tls
   rules:
-  - host: monitor.de-marauder.me
+  - host: prom.de-marauder.me
     http:
       paths:
       - path: /
@@ -21,7 +21,9 @@ spec:
         backend:
           service: 
             # name: prometheus-server
-            name: monitoring-kube-prometheus-prometheus
+            # name: monitoring-kube-prometheus-prometheus
+            name: loki-stack-prometheus-server
             port: 
-              number: 9090
-              # number: 80 # use when installing prometheus individually
+            # Should be the targetPort of the service
+              # number: 9090 # use with kube-prometheus-stack
+              number: 80 # use with loki-stack or when installing prometheus individually

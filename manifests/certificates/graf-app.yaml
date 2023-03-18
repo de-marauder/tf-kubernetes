@@ -5,7 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   dnsNames:
-    - grafana.de-marauder.me
+    - graf.de-marauder.me
   secretName: grafana-server-tls
   issuerRef:
     name: letsencrypt-cluster-issuer

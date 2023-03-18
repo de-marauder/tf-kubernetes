@@ -1,5 +1,5 @@
 #!/bin/bash 
-
+# Install prometheus Custom Resource Definitions
 set -o errexit
 
 kubectl apply -f https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/v0.45.0/example/prometheus-operator-crd/monitoring.coreos.com_alertmanagers.yaml && \

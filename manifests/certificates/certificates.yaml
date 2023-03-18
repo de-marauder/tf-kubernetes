@@ -5,8 +5,8 @@ metadata:
   namespace: vote-app
 spec:
   dnsNames:
-    - vote.de-marauder.me
-    - result.de-marauder.me
+    - vote-app.de-marauder.me
+    - result-app.de-marauder.me
   secretName: vote-app-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
@@ -21,7 +21,7 @@ metadata:
   namespace: sock-shop
 spec:
   dnsNames:
-    - sock.de-marauder.me
+    - sock-shop.de-marauder.me
   secretName: sock-shop-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
@@ -51,8 +51,23 @@ metadata:
   namespace: monitoring
 spec:
   dnsNames:
-    - grafana.de-marauder.me
+    - graf.de-marauder.me
   secretName: grafana-server-tls
+  issuerRef:
+    name: letsencrypt-cluster-issuer
+    kind: ClusterIssuer
+    
+---
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: portfolio-cert
+  namespace: portfolio
+spec:
+  dnsNames:
+    - de-marauder.me
+  secretName: portfolio-server-tls
   issuerRef:
     name: letsencrypt-cluster-issuer
     kind: ClusterIssuer

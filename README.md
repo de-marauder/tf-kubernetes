@@ -12,7 +12,7 @@ The 3 modules include:
 - An AWS account
 - AWS CLI configured for a terraform IAM user (default)
 - terraform installed on your computer
-  
+
 ### Default settings
 - `cluster_name` = kube-marauder
 - `region` = us-east-1
@@ -25,10 +25,12 @@ terraform init
 terraform plan
 terraform apply
 ```
+
 **
 NOTE Module dependency is as follows route53 > manifests > kube-cluster.
 Therefore, start the kube-cluster first then deploy the manifests and then route53
 **
+
 # Clean up
 I the event that the infrastructure is no longer needed, run the command below in every module in reverse order of creation to destroy the infrastructure.
 ```bash

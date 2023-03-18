@@ -8,4 +8,5 @@ unzip -u awscliv2.zip
 
 sudo ./aws/install
 
+# Get cluster configuration for remote connection
 aws eks --region example_region update-kubeconfig --name cluster_name
