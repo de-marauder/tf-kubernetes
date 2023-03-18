@@ -18,6 +18,13 @@ The 3 modules include:
 - `region` = us-east-1
 - `aws_profile` = terraform
 
+### Default Domains
+- My portfolio: [de-marauder.me](de-marauder.me)
+- A voting application on [vote-app.de-marauder.me](vote-app.de-marauder.me) and [result-app.de-marauder.me](result-app.de-marauder.me)
+- The weaveworks sock shop application on [sock-shop.de-marauder.me](sock-shop.de-marauder.me)
+- Prometheus at [prom.de-marauder.me](prom.de-marauder.me)
+- Grafana at [graf.de-marauder.me](graf.de-marauder.me)
+
 # How to use
 Since this was built with a modularized approach, each module will have to be deployed independently. Navigate into the root of every module and run the following commands. 
 ``` bash
@@ -26,13 +33,26 @@ terraform plan
 terraform apply
 ```
 
-**
-NOTE Module dependency is as follows route53 > manifests > kube-cluster.
-Therefore, start the kube-cluster first then deploy the manifests and then route53
-**
+**NOTE Module dependency is as follows route53 > manifests > kube-cluster.**
+**Therefore, start the kube-cluster first then deploy the manifests and then route53**
+**After deploying the manifests, run the command below to obtain the loadbalancer name which will be requested by the next module**
+```bash
+kubectl get service/ingress-nginx-controller -n ingress-nginx
+```
+Result should look like this:
+<img src='images/lbname.png' alt='ingress-controller-lb-name' />
+The load balancer's name is the part of the load balancer DNS before the first hyphen (-). In this case `a65a841b227624d2f8bc6ce1d291c6b7`
 
 # Clean up
 I the event that the infrastructure is no longer needed, run the command below in every module in reverse order of creation to destroy the infrastructure.
 ```bash
 terraform destroy
 ```
+
+# Results
+<img src='images/portfolio.png' alt='portfolio' />
+<img src='images/vote-app.png' alt='vote-app' />
+<img src='images/result-app.png' alt='result-app' />
+<img src='images/sock-shop.png' alt='sock-shop' />
+<img src='images/prometheus.png' alt='prometheus' />
+<img src='images/grafana.png' alt='grafana' />
