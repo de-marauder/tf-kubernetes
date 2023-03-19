@@ -3,9 +3,9 @@
 ## Description
 This repo contains terraform code to provision and manage three separate applications on a kubernetes cluster using AWS EKS. The components of the infrasture are split up into 3 separate modules which are invoked separately to reduce the size of the state file and boost build times.
 The applications include:
-- My portfolio: [de-marauder.me](de-marauder.me)
-- A [voting application](https://github.com/dockersamples/example-voting-app) on [vote-app.de-marauder.me](vote-app.de-marauder.me) and [result-app.de-marauder.me](result-app.de-marauder.me)
-- The [weaveworks sock shop](https://github.com/microservices-demo/microservices-demo) application on [sock-shop.de-marauder.me](sock-shop.de-marauder.me)
+- My portfolio: [de-marauder.me](https://de-marauder.me)
+- A [voting application](https://github.com/dockersamples/example-voting-app) on [vote-app.de-marauder.me](https://vote-app.de-marauder.me) and [result-app.de-marauder.me](https://result-app.de-marauder.me)
+- The [weaveworks sock shop](https://github.com/microservices-demo/microservices-demo) application on [sock-shop.de-marauder.me](https://sock-shop.de-marauder.me)
 
 The 3 modules include:
 - `The EKS cluster`: Including a VPC and 6 subnets
@@ -23,11 +23,11 @@ The 3 modules include:
 - `aws_profile` = terraform
 
 ### Default Domains
-- My portfolio: [de-marauder.me](de-marauder.me)
-- A voting application on [vote-app.de-marauder.me](vote-app.de-marauder.me) and [result-app.de-marauder.me](result-app.de-marauder.me)
-- The weaveworks sock shop application on [sock-shop.de-marauder.me](sock-shop.de-marauder.me)
-- Prometheus at [prom.de-marauder.me](prom.de-marauder.me)
-- Grafana at [graf.de-marauder.me](graf.de-marauder.me)
+- My portfolio: [de-marauder.me](https://de-marauder.me)
+- A voting application on [vote-app.de-marauder.me](https://vote-app.de-marauder.me) and [result-app.de-marauder.me](https://result-app.de-marauder.me)
+- The weaveworks sock shop application on [sock-shop.de-marauder.me](https://sock-shop.de-marauder.me)
+- Prometheus at [prom.de-marauder.me](https://prom.de-marauder.me)
+- Grafana at [graf.de-marauder.me](https://graf.de-marauder.me)
 
 # How to use
 Since this was built with a modularized approach, each module will have to be deployed independently. Navigate into the root of every module and run the following commands. 
