@@ -114,7 +114,6 @@
 
 # kubectl get secrets -A
 # kubectl get secrets loki-stack-grafana -n monitoring -oyaml
-# BASE64_SECRET=OUV0RU1VUHdTQld5ZmFRRGtNWWJ6N3ROQkRBTllXSjVwT0oyUTdPTw==
 # echo $BASE64_SECRET | base64 -d ; echo
 
 #####################################################################################
