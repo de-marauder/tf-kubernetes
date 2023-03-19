@@ -1,7 +1,7 @@
-# Provision 2 application on an AWS EKS cluster
+# Provision 3 application on an AWS EKS cluster
 
 ## Description
-This repo contains terraform code to provision and manage two separate applications on a kubernetes cluster using AWS EKS. The components of the infrasture are split up into 3 separate modules which are invoked separately to reduce the size of the state file and boost build times.
+This repo contains terraform code to provision and manage three separate applications on a kubernetes cluster using AWS EKS. The components of the infrasture are split up into 3 separate modules which are invoked separately to reduce the size of the state file and boost build times.
 
 The 3 modules include:
 - `The EKS cluster`: Including a VPC and 6 subnets
@@ -35,16 +35,20 @@ terraform apply
 
 **NOTE Module dependency is as follows route53 > manifests > kube-cluster.**
 **Therefore, start the kube-cluster first then deploy the manifests and then route53**
-**After deploying the manifests, run the command below to obtain the loadbalancer name which will be requested by the next module**
+**After deploying the manifests, run the command below to obtain the loadbalancer name which will be requested by the route53 module**
 ```bash
 kubectl get service/ingress-nginx-controller -n ingress-nginx
 ```
 Result should look like this:
 <img src='images/lbname.png' alt='ingress-controller-lb-name' />
-The load balancer's name is the part of the load balancer DNS before the first hyphen (-). In this case `a65a841b227624d2f8bc6ce1d291c6b7`
+> The load balancer's name is the part of the load balancer DNS before the first hyphen (-). In this case `a65a841b227624d2f8bc6ce1d291c6b7`
+
+---
+
+> It's also important to note that if you're going to change the default sub-domains, you should equally update the manifest files for [ingress](manifests/ingress) and [certificates](manifests/certificates) to reflect the new domains.
 
 # Clean up
-I the event that the infrastructure is no longer needed, run the command below in every module in reverse order of creation to destroy the infrastructure.
+In the event that the infrastructure is no longer needed, run the command below in every module in reverse order of creation to destroy the infrastructure.
 ```bash
 terraform destroy
 ```
