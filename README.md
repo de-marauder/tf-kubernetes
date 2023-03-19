@@ -2,6 +2,10 @@
 
 ## Description
 This repo contains terraform code to provision and manage three separate applications on a kubernetes cluster using AWS EKS. The components of the infrasture are split up into 3 separate modules which are invoked separately to reduce the size of the state file and boost build times.
+The applications include:
+- My portfolio: [de-marauder.me](de-marauder.me)
+- A [voting application](https://github.com/dockersamples/example-voting-app) on [vote-app.de-marauder.me](vote-app.de-marauder.me) and [result-app.de-marauder.me](result-app.de-marauder.me)
+- The [weaveworks sock shop](https://github.com/microservices-demo/microservices-demo) application on [sock-shop.de-marauder.me](sock-shop.de-marauder.me)
 
 The 3 modules include:
 - `The EKS cluster`: Including a VPC and 6 subnets
